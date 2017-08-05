@@ -1,0 +1,43 @@
+var fs = require('fs');
+var svg2img = require('svg2img');
+var btoa = require('btoa');
+
+// a simple TeX-input example
+var mjAPI = require("mathjax-node");
+mjAPI.config({
+  MathJax: {
+    // traditional MathJax configuration
+  }
+});
+mjAPI.start();
+
+//var yourMath = 'E = mc^2';
+var yourMath = "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" xmlns:mathematica=\"http://www.wolfram.com/XML/\"><mtable displaystyle=\"true\"><mtr xmlns=\"http://www.w3.org/1998/Math/MathML\" xmlns:mathematica=\"http://www.wolfram.com/XML/\"> <mtd>  <mtable displaystyle=\"true\" columnalign=\"left\" indentalign=\"left\"><mtr> <mtd>  <mrow><mrow> <mtext>&nbsp;Collect results&nbsp;</mtext></mrow><mtext></mtext>  </mrow> </mtd></mtr><mtr> <mtd>  <mtable displaystyle=\"true\"><mtr> <mtd>  <mrow><mi>Answer</mi>  </mrow> </mtd> <mtd>  <mtext>&nbsp;&nbsp;</mtext> </mtd></mtr><mtr> <mtd/> <mtd>  <mrow><mrow> <mo>{</mo> <mtable>  <mtr><mtd> <mrow>  <mi>s</mi>  <mo>=</mo>  <mn>2</mn> </mrow></mtd>  </mtr>  <mtr><mtd> <mrow>  <mi>t</mi>  <mo>=</mo>  <mn>1</mn> </mrow></mtd>  </mtr> </mtable></mrow>  </mrow> </mtd></mtr>  </mtable> </mtd></mtr>  </mtable> </mtd></mtr>  </mtable></math>";
+
+mjAPI.typeset({
+	math: yourMath,
+	format: "MathML", // "inline-TeX", "MathML"
+	svg:true, //  svg:true,
+}, function (data) {
+	if (!data.errors) {
+		var svgString = data.svg;
+		console.log(svgString);
+//		svg2img(svgString, {format: 'jpg', quality: 75}, function(error, buffer) {
+//			fs.writeFileSync('math.jpg', buffer);
+//		});
+		svg2img(svgString, {'width': 800, 'height': 600}, function(error, buffer){
+			fs.writeFileSync('math.png', buffer);
+		});
+	}
+
+  // will produce:
+  // <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  //   <mi>E</mi>
+  //   <mo>=</mo>
+  //   <mi>m</mi>
+  //   <msup>
+  //     <mi>c</mi>
+  //     <mn>2</mn>
+  //   </msup>
+  // </math>
+});

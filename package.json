@@ -1,0 +1,18 @@
+{
+  "name": "mathjax-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "canvas": "^1.6.6",
+    "express": "^4.15.3",
+    "mathjax-node": "^1.1.0",
+    "svg2img": "^0.2.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
