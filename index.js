@@ -81,14 +81,10 @@ app.get('/mathml2image', function(req, res) {
 		if (data.errors) {
 			res.status(409).json({status: 'Error', message: 'Cannot convert the mathml expression'})
 		} else {
-			const svg_string = `<svg>${data.svg}</svg>`
+			const svg_string = data.svg
 			const svg_width = parseFloat(data.width)
 			const svg_height = parseFloat(data.height)
 			const scale = out_width / svg_width	// Calculate the scale for output image
-
-			console.log('svg: ', svg_string);
-			console.log('html: ', data.html);
-			console.log('css: ', data.css);
 
 			/*
 			 Convert svg string to png image
